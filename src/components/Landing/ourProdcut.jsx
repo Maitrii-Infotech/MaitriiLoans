@@ -1,19 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link'; // Import Link from Next.js
 import ourProductImage from "../../../public/images/ourProdcut.png";
 
 const services = [
   {
     title: "MORTGAGE LOAN",
     description: "Our flexible solutions cater to all types of personal and business needs, offering terms from 3 to 7 years. With minimal documentation and easy payment options, we make it simple and convenient for you to achieve your goals.",
+    link: "/product/mortgage" // Added Mortgage Link
   },
   {
     title: "BUSINESS LOAN",
     description: "Our flexible solutions cater to all types of personal and business needs, with terms ranging from 1 to 3 years. Benefit from minimal documentation and easy payment options, making the process convenient and straightforward for you.",
+    link: "/product/business-loan" // Added Business Link
   },
   {
     title: "VEHICLE LOAN",
     description: "Our flexible solutions are designed to meet all types of personal and business needs, with terms ranging from 2 to 5 years. Enjoy minimal documentation requirements and easy payment options, making it simple and achieve your goals.",
+    link: "/product/vehicle-loan" // Added Vehicle Link
   }
 ];
 
@@ -22,15 +26,15 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3 
+      staggerChildren: 0.3
     }
   }
 };
 
 const cardVariants = {
-  hidden: { y: 50, opacity: 0 }, 
-  visible: { 
-    y: 0, 
+  hidden: { y: 50, opacity: 0 },
+  visible: {
+    y: 0,
     opacity: 1,
     transition: { duration: 0.6, ease: "easeOut" }
   }
@@ -39,12 +43,12 @@ const cardVariants = {
 const OurProduct = () => {
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
-      
+
       {/* Background Image Section */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(${ourProductImage.src})`, 
+          backgroundImage: `url(${ourProductImage.src})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -55,21 +59,20 @@ const OurProduct = () => {
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
-        
-        {/* Main Heading Animation - Fixed */}
-        <motion.h1 
+
+        {/* Main Heading Animation */}
+        <motion.h1
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8 }}
-          // Added 'uppercase' and 'tracking-wider' for a better section title look
           className="text-3xl md:text-5xl font-bold text-center text-white mb-16 max-w-4xl mx-auto leading-tight drop-shadow-lg uppercase tracking-wider"
         >
           Our Products
         </motion.h1>
 
         {/* Cards Grid Animation */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -77,7 +80,7 @@ const OurProduct = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
         >
           {services.map((service, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               variants={cardVariants}
               className="group relative p-8 rounded-2xl overflow-hidden border border-white/10 bg-black/30 backdrop-blur-md shadow-xl hover:bg-black/40 transition-all duration-300"
@@ -91,11 +94,13 @@ const OurProduct = () => {
                     {service.description}
                   </p>
                 </div>
-                
-                {/* Apply Button */}
-                <button className="px-8 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium text-sm transition-all duration-300 backdrop-blur-sm border border-white/10">
-                  Apply
-                </button>
+
+                {/* Apply Button wrapped in Next.js Link */}
+                <Link href={service.link} className="w-full sm:w-auto">
+                  <button className="px-8 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium text-sm transition-all duration-300 backdrop-blur-sm border border-white/10 cursor-pointer">
+                    Apply
+                  </button>
+                </Link>
               </div>
             </motion.div>
           ))}

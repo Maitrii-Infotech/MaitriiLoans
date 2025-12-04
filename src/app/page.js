@@ -17,17 +17,17 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect( () => {
+  useEffect(() => {
     (
       async () => {
-          const LocomotiveScroll = (await import('locomotive-scroll')).default
-          const locomotiveScroll = new LocomotiveScroll();
+        const LocomotiveScroll = (await import('locomotive-scroll')).default
+        const locomotiveScroll = new LocomotiveScroll();
 
-          setTimeout( () => {
-            setIsLoading(false);
-            document.body.style.cursor = 'default'
-            window.scrollTo(0,0);
-          }, 2000)
+        setTimeout(() => {
+          setIsLoading(false);
+          document.body.style.cursor = 'default'
+          window.scrollTo(0, 0);
+        }, 2000)
       }
     )()
   }, [])
@@ -39,10 +39,10 @@ export default function Home() {
       </AnimatePresence>
       <Landing />
       <Description />
-      <Howtogetloans/>
-      <OurProduct/>
-      <WhyChooseUs/>
-      <NetworkMap/>
+      <Howtogetloans />
+      <OurProduct />
+      <WhyChooseUs />
+      <NetworkMap />
       {/* <Projects />
       <SlidingImages />
       */}
