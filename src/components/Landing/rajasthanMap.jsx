@@ -56,12 +56,11 @@ const stateConfig = {
 
 const NetworkMap = () => {
   const [activeState, setActiveState] = useState("Rajasthan");
-  // Hover State: Track karega ki abhi mouse kis city par hai
   const [hoveredMarker, setHoveredMarker] = useState(null);
+  const [isMapActive, setIsMapActive] = useState(false);
 
   const currentData = stateConfig[activeState];
 
-  // Logic: Hover wale marker ko list ke end mein bhejo taaki wo sabse upar dikhe (Z-Index trick)
   const sortedMarkers = useMemo(() => {
     return [...currentData.markers].sort((a, b) => {
       if (a.name === hoveredMarker) return 1;
@@ -69,6 +68,24 @@ const NetworkMap = () => {
       return 0;
     });
   }, [currentData.markers, hoveredMarker]);
+
+  // Map container click handler
+  const handleMapClick = () => {
+    setIsMapActive(true);
+  };
+
+  // Document click handler to deactivate map
+  React.useEffect(() => {
+    const handleDocumentClick = (e) => {
+      const mapContainer = document.getElementById('map-container');
+      if (mapContainer && !mapContainer.contains(e.target)) {
+        setIsMapActive(false);
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -96,7 +113,28 @@ const NetworkMap = () => {
         </button>
       </div>
 
-      <div className="w-full max-w-5xl h-[700px] border rounded-xl shadow-lg bg-white overflow-hidden relative transition-all duration-500">
+      <div
+        id="map-container"
+        className={`w-full max-w-5xl h-[700px] border rounded-xl shadow-lg bg-white overflow-hidden relative transition-all duration-500 ${isMapActive ? 'ring-2 ring-[#6D3078]' : ''
+          }`}
+        onClick={handleMapClick}
+        style={{
+          cursor: isMapActive ? 'grab' : 'pointer',
+          overflowY: isMapActive ? 'hidden' : 'auto'
+        }}
+        onWheel={(e) => {
+          if (!isMapActive) {
+            e.stopPropagation();
+          }
+        }}
+      >
+        {!isMapActive && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/5 backdrop-blur-[0.5px] z-10 pointer-events-none">
+            <div className="bg-white/90 px-6 py-3 rounded-full shadow-lg">
+              <p className="text-sm font-medium text-gray-700">Click to interact with map</p>
+            </div>
+          </div>
+        )}
 
         <ComposableMap
           projection="geoMercator"
@@ -135,7 +173,6 @@ const NetworkMap = () => {
               }
             </Geographies>
 
-            {/* Note: Humne sortedMarkers use kiya hai taaki hover wala upar aaye */}
             {sortedMarkers.map(({ name, coordinates, status }) => {
               const pinColor = status === "current" ? COLOR_CURRENT : COLOR_PROPOSED;
               const isHovered = hoveredMarker === name;
@@ -146,22 +183,16 @@ const NetworkMap = () => {
                   coordinates={coordinates}
                   onMouseEnter={() => setHoveredMarker(name)}
                   onMouseLeave={() => setHoveredMarker(null)}
-                  style={{ cursor: "pointer" }} // Hand cursor on hover
+                  style={{ cursor: "pointer" }}
                 >
-                  {/* Grouping Logic: 
-                    Outer G handles positioning. 
-                    Inner G handles Scale Animation.
-                    transformOrigin "12px 24px" is the bottom tip of the pin.
-                  */}
                   <g transform="translate(-12, -24)">
                     <g
                       style={{
-                        transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)", // Bouncy effect
+                        transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                         transform: isHovered ? "scale(1.5)" : "scale(1)",
-                        transformOrigin: "12px 24px" // Scale from the bottom tip
+                        transformOrigin: "12px 24px"
                       }}
                     >
-                      {/* Pin Shape */}
                       <path
                         d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"
                         fill={pinColor}
@@ -171,7 +202,6 @@ const NetworkMap = () => {
                       />
                       <circle cx="12" cy="10" r="3" fill="white" />
 
-                      {/* Text Logic */}
                       <text
                         x="12"
                         y="-10"
