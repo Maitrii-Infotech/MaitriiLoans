@@ -27,7 +27,7 @@
     h1 {
       margin: 0;
       color: white;
-  font-size: 40px; 
+      font-size: clamp(40px, 5vw, 80px); 
       font-weight: 500;
       line-height: 1.1;
       flex: 1; // Text bachi hui jagah lega
