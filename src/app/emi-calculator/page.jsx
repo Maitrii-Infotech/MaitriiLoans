@@ -18,7 +18,7 @@ const EMICalculatorPage = () => {
         const months = tenureType === 'Years' ? loanTenure * 12 : loanTenure;
 
         const emi = (principal * ratePerMonth * Math.pow(1 + ratePerMonth, months)) / (Math.pow(1 + ratePerMonth, months) - 1);
-
+        
         const totalAmount = emi * months;
         const totalInterest = totalAmount - principal;
 
@@ -44,40 +44,96 @@ const EMICalculatorPage = () => {
     const radius = 70;
     const circumference = 2 * Math.PI * radius;
     const interestPercentage = (emiDetails.totalInterest / emiDetails.totalPayment) * 100 || 0;
-    // Ensure we handle NaN or Infinite values gracefully
     const safeInterestPercentage = isNaN(interestPercentage) ? 0 : interestPercentage;
     const principalOffset = circumference - ((100 - safeInterestPercentage) / 100) * circumference;
-    // const interestOffset = circumference - (safeInterestPercentage / 100) * circumference; // Not strictly needed for logic but good for ref
 
     return (
         <div className="w-full min-h-screen bg-[#F8FAFC] font-sans text-slate-700">
+            
+            {/* --- Hero Section (White BG + EMI Theme SVGs) --- */}
+            <div className="relative w-full h-[500px] overflow-hidden bg-white">
+                
+                {/* Layer 1: Background Patterns & SVGs */}
+                <div className="absolute inset-0 w-full h-full">
+                    <svg viewBox="0 0 1440 500" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full object-cover opacity-80">
+                        
+                        {/* 1. Grid Pattern (Subtle Graph Paper look) */}
+                        <defs>
+                            <pattern id="gridPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#000000" strokeWidth="0.5" opacity="0.05"/>
+                            </pattern>
+                        </defs>
+                        <rect x="0" y="0" width="1440" height="500" fill="url(#gridPattern)" />
 
-            {/* --- 1. Page Header (Hero) --- */}
-            <div className="bg-[#6D3078] py-16 text-center px-6 relative overflow-hidden">
-                {/* Abstract Background Decoration */}
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                    <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="none">
-                        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
+                        {/* 2. Abstract Calculator Keys (Rectangles) */}
+                        <rect x="100" y="100" width="60" height="60" rx="12" fill="#F47E4D" opacity="0.1" transform="rotate(-15 130 130)" />
+                        <rect x="1200" y="80" width="50" height="50" rx="10" stroke="#6D3078" strokeWidth="2" opacity="0.1" transform="rotate(20 1225 105)" />
+                        <rect x="200" y="350" width="40" height="40" rx="8" fill="#6D3078" opacity="0.05" />
+
+                        {/* 3. Mathematical Symbols (+, -, %, =) */}
+                        {/* Plus */}
+                        <g transform="translate(1300, 350) rotate(15)">
+                            <rect x="-15" y="-3" width="30" height="6" fill="#F47E4D" opacity="0.2" />
+                            <rect x="-3" y="-15" width="6" height="30" fill="#F47E4D" opacity="0.2" />
+                        </g>
+                        {/* Percentage */}
+                        <text x="300" y="150" fontSize="100" fontWeight="bold" fill="#6D3078" opacity="0.03">%</text>
+                        {/* Rupee */}
+                        <text x="1100" y="400" fontSize="120" fontWeight="bold" fill="#F47E4D" opacity="0.05">₹</text>
+
+                        {/* 4. Donut Chart Abstract Shapes */}
+                        <circle cx="500" cy="400" r="80" stroke="#F47E4D" strokeWidth="20" strokeDasharray="300 200" opacity="0.1" fill="none" />
+                        <circle cx="850" cy="100" r="50" stroke="#6D3078" strokeWidth="10" strokeDasharray="100 214" opacity="0.1" fill="none" transform="rotate(-45 850 100)" />
+
+                        {/* 5. Rising Graph Line */}
+                        <path d="M0 450 Q 300 400 600 250 T 1440 100" stroke="#6D3078" strokeWidth="2" fill="none" opacity="0.1" strokeDasharray="10 10" />
+                        
+                        {/* 6. Scattered Dots */}
+                        <circle cx="600" cy="200" r="5" fill="#F47E4D" opacity="0.4" />
+                        <circle cx="900" cy="300" r="8" fill="#6D3078" opacity="0.3" />
+                        <circle cx="150" cy="250" r="4" fill="#000000" opacity="0.2" />
                     </svg>
                 </div>
 
-                <div className="relative z-10">
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                {/* Layer 2: White Fade Gradient (Bottom to Top) */}
+                <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#F8FAFC] to-transparent z-0 pointer-events-none"></div>
+
+                {/* Layer 3: Content */}
+                <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-6 pt-10">
+                    <motion.span 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-block py-1 px-3 rounded-full bg-[#F47E4D]/10 border border-[#F47E4D] text-[#F47E4D] text-sm font-bold mb-4 backdrop-blur-md"
+                    >
+                        PLAN YOUR FINANCES
+                    </motion.span>
+                    <motion.h1 
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-4xl md:text-6xl font-bold text-[#6D3078] mb-4"
+                    >
                         EMI Calculator
-                    </h1>
-                    <p className="text-white/80 max-w-2xl mx-auto text-lg">
-                        Plan your financial journey with confidence. Calculate your monthly outgo in seconds.
-                    </p>
+                    </motion.h1>
+                    <motion.p 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+                    >
+                        Calculate your monthly outgo in seconds. Plan your loan repayment with our easy-to-use smart calculator.
+                    </motion.p>
                 </div>
             </div>
 
             {/* --- 2. Calculator Section --- */}
-            <section className="container mx-auto px-4 md:px-8 max-w-6xl -mt-10 relative z-20 mb-20">
+            <section className="container mx-auto px-4 md:px-8 max-w-6xl -mt-20 relative z-20 mb-20">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-
+                    
                     {/* --- LEFT SIDE: INPUTS --- */}
                     <div className="lg:col-span-7 p-8 md:p-10 space-y-10">
-
+                        
                         {/* Loan Amount Slider */}
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
@@ -136,13 +192,13 @@ const EMICalculatorPage = () => {
                                 </label>
                                 <div className="flex items-center gap-3">
                                     <div className="flex bg-[#F3E8FF] rounded-lg p-1">
-                                        <button
+                                        <button 
                                             onClick={() => setTenureType('Years')}
                                             className={`px-4 py-1 rounded-md text-sm font-bold transition-all ${tenureType === 'Years' ? 'bg-[#6D3078] text-white shadow-md' : 'text-[#6D3078] hover:bg-white/50'}`}
                                         >
                                             Yr
                                         </button>
-                                        <button
+                                        <button 
                                             onClick={() => setTenureType('Months')}
                                             className={`px-4 py-1 rounded-md text-sm font-bold transition-all ${tenureType === 'Months' ? 'bg-[#6D3078] text-white shadow-md' : 'text-[#6D3078] hover:bg-white/50'}`}
                                         >
@@ -173,7 +229,7 @@ const EMICalculatorPage = () => {
 
                     {/* --- RIGHT SIDE: RESULTS & CHART --- */}
                     <div className="lg:col-span-5 bg-[#6D3078] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden">
-
+                        
                         {/* Background Decoration */}
                         <div className="absolute top-[-20%] right-[-20%] w-[300px] h-[300px] bg-[#F47E4D] rounded-full opacity-10 blur-3xl"></div>
                         <div className="absolute bottom-[-10%] left-[-10%] w-[200px] h-[200px] bg-[#F47E4D] rounded-full opacity-10 blur-3xl"></div>
@@ -181,7 +237,7 @@ const EMICalculatorPage = () => {
                         {/* EMI Result */}
                         <div className="text-center relative z-10">
                             <p className="text-white/70 text-sm font-medium uppercase tracking-wider mb-2">Monthly EMI</p>
-                            <motion.h3
+                            <motion.h3 
                                 key={emiDetails.monthlyEMI}
                                 initial={{ scale: 0.9, opacity: 0.5 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -209,7 +265,7 @@ const EMICalculatorPage = () => {
                                         stroke="#FFFFFF"
                                         strokeWidth="20"
                                         strokeDasharray={circumference}
-                                        strokeDashoffset={principalOffset}
+                                        strokeDashoffset={principalOffset} 
                                         strokeLinecap="round"
                                         className="transition-all duration-1000 ease-out"
                                     />
@@ -265,10 +321,10 @@ const EMICalculatorPage = () => {
                 </div>
             </section>
 
-            {/* --- 3. Information Section (Making it a complete page) --- */}
+            {/* --- 3. Information Section --- */}
             <section className="container mx-auto px-6 md:px-12 pb-20 max-w-5xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-
+                    
                     {/* Info Card 1 */}
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                         <div className="flex items-center gap-3 mb-4">
@@ -291,9 +347,9 @@ const EMICalculatorPage = () => {
                             <h3 className="text-xl font-bold text-[#6D3078]">How is it calculated?</h3>
                         </div>
                         <p className="text-slate-600 leading-relaxed">
-                            The mathematical formula for calculating EMI is: <br />
+                            The mathematical formula for calculating EMI is: <br/>
                             <span className="font-semibold text-[#F47E4D]">EMI = [P x R x (1+R)^N]/[(1+R)^N-1]</span>
-                            <br />
+                            <br/>
                             Where P represents the Loan Amount, R is the interest rate per month, and N is the number of monthly installments.
                         </p>
                     </div>
