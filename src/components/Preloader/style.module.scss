@@ -19,28 +19,29 @@
         }
     }
 
-    // New Container for text alignment
+    // New Container for text/logo alignment
     .textContainer {
         position: absolute;
         z-index: 1;
         display: flex;
-        flex-direction: column; // Text ko upar-neeche karne ke liye
+        flex-direction: column; 
         align-items: center;
         justify-content: center;
-        gap: 10px; // Dono text ke beech thoda gap
+        gap: 10px;
 
+        // --- UPDATED BRAND NAME FOR IMAGE LOGO ---
         .brandName {
-            color: white;
-            font-size: 50px; // Desktop size
+            width: 300px;       // Desktop par logo ki width
+            height: auto;       // Height aspect ratio maintain karegi
+            object-fit: contain;
             margin: 0;
-            font-weight: bold;
-            white-space: nowrap; // Text ko tutne se bachane ke liye
+            display: block;
         }
 
         p {
             display: flex;
             color: white;
-            font-size: 42px; // Desktop size
+            font-size: 42px; // Desktop size text
             align-items: center;
             margin: 0;
             white-space: nowrap;
@@ -61,24 +62,24 @@
 @media (max-width: 768px) {
     .introduction {
         .textContainer {
-            gap: 5px; // Mobile pe gap kam
+            gap: 8px; 
 
+            // --- MOBILE LOGO SIZE ---
             .brandName {
-                font-size: 32px; // Mobile: Font size chhota kiya
+                width: 180px; // Mobile par logo chhota kar diya
             }
 
             p {
-                font-size: 20px; // Mobile: Font size chhota kiya
+                font-size: 20px; // Mobile Text size
 
                 span {
-                    width: 8px; // Mobile: Dot size chhota
+                    width: 8px; 
                     height: 8px;
                     margin-right: 8px;
                 }
             }
         }
-
-        // Optional: Agar curve mobile pe zyada deep lag raha ho to adjust karein
+        
         svg {
             height: calc(100% + 150px);
         }

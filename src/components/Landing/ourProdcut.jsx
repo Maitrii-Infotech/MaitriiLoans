@@ -1,23 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link'; // Import Link from Next.js
-import ourProductImage from "../../../public/images/ourProdcut.png";
+// import Link from 'next/link'; // Removing next/link for standalone preview
+// import ourProductImage from "../../../public/images/ourProdcut.png"; // Removing local image import
 
 const services = [
   {
     title: "MORTGAGE LOAN",
     description: "Our flexible solutions cater to all types of personal and business needs, offering terms from 3 to 7 years. With minimal documentation and easy payment options, we make it simple and convenient for you to achieve your goals.",
-    link: "/product/mortgage" // Added Mortgage Link
+    link: "/product/mortgage"
   },
   {
     title: "BUSINESS LOAN",
     description: "Our flexible solutions cater to all types of personal and business needs, with terms ranging from 1 to 3 years. Benefit from minimal documentation and easy payment options, making the process convenient and straightforward for you.",
-    link: "/product/business-loan" // Added Business Link
+    link: "/product/business-loan"
   },
   {
     title: "VEHICLE LOAN",
     description: "Our flexible solutions are designed to meet all types of personal and business needs, with terms ranging from 2 to 5 years. Enjoy minimal documentation requirements and easy payment options, making it simple and achieve your goals.",
-    link: "/product/vehicle-loan" // Added Vehicle Link
+    link: "/product/vehicle-loan"
   }
 ];
 
@@ -44,17 +44,18 @@ const OurProduct = () => {
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
 
-      {/* Background Image Section */}
+      {/* Background Image Section - Using a placeholder URL for preview */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(${ourProductImage.src})`,
+          // Using a placeholder image that matches the theme (dark/finance)
+          backgroundImage: `url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         {/* Dark Overlay for readability */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       {/* Main Content */}
@@ -66,7 +67,7 @@ const OurProduct = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8 }}
-          className="text-3xl md:text-5xl font-bold text-center text-white mb-16 max-w-4xl mx-auto leading-tight drop-shadow-lg uppercase tracking-wider"
+          className="text-2xl md:text-5xl  text-center text-white mb-16 max-w-4xl mx-auto leading-tight drop-shadow-lg uppercase tracking-wider"
         >
           Our Products
         </motion.h1>
@@ -87,7 +88,7 @@ const OurProduct = () => {
             >
               <div className="flex flex-col h-full justify-between items-start">
                 <div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     {service.title}
                   </h3>
                   <p className="text-gray-200 text-sm md:text-base leading-relaxed mb-8 opacity-90">
@@ -95,12 +96,12 @@ const OurProduct = () => {
                   </p>
                 </div>
 
-                {/* Apply Button wrapped in Next.js Link */}
-                <Link href={service.link} className="w-full sm:w-auto">
-                  <button className="px-8 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium text-sm transition-all duration-300 backdrop-blur-sm border border-white/10 cursor-pointer">
-                    Apply
-                  </button>
-                </Link>
+                {/* Using standard <a> tag for preview compatibility */}
+                <a href={service.link} className="w-full sm:w-auto">
+                    <button className="px-8 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium text-sm transition-all duration-300 backdrop-blur-sm border border-white/10 cursor-pointer">
+                        Apply
+                    </button>
+                </a>
               </div>
             </motion.div>
           ))}

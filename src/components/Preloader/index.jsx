@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { opacity, slideUp } from './anim';
-
+import logo from "../../../public/images/logo.png"
 const words = ["Home Loans", "Fast Approvals", "Home & Personal Loans", "Business Loans", "Apply in Minutes", "Trusted Loan Partner",]
 
 export default function Preloader() {
@@ -41,7 +41,7 @@ export default function Preloader() {
                 <>
                     {/* Yahan maine container wrap kiya hai */}
                     <div className={styles.textContainer}>
-                        <h2 className={styles.brandName}>Maitrii Loans</h2>
+                        <img src={logo.src} alt="Maitrii Loans" className={styles.brandName} />
                         <motion.p variants={opacity} initial="initial" animate="enter">
                             <span></span>{words[index]}
                         </motion.p>

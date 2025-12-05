@@ -1,13 +1,94 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+
+// --- Custom SVGs for each card ---
+
+const FastApprovalIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="45" fill="#F3E8FF" stroke="#6D3078" strokeWidth="2" strokeDasharray="4 4" />
+    {/* Rocket */}
+    <path d="M50 20C50 20 30 50 30 65C30 75 40 80 50 80C60 80 70 75 70 65C70 50 50 20 50 20Z" fill="#6D3078" />
+    <path d="M50 20C50 20 40 50 50 50C60 50 50 20 50 20" fill="#A855F7" opacity="0.5" />
+    <circle cx="50" cy="55" r="8" fill="white" />
+    {/* Flames */}
+    <path d="M40 80L50 95L60 80" fill="#F47E4D" />
+  </svg>
+);
+
+const EasyExperienceIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="25" y="15" width="50" height="70" rx="8" fill="white" stroke="#6D3078" strokeWidth="3" />
+    <rect x="30" y="20" width="40" height="50" rx="4" fill="#F8FAFC" />
+    <circle cx="50" cy="78" r="4" fill="#F47E4D" />
+    {/* Checkmark on screen */}
+    <path d="M35 45L45 55L65 35" stroke="#F47E4D" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+    {/* Sparkles */}
+    <path d="M85 20L90 25L85 30L80 25Z" fill="#F47E4D" />
+    <path d="M15 70L20 75L15 80L10 75Z" fill="#6D3078" />
+  </svg>
+);
+
+const MinDocIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Paper Stack */}
+    <rect x="35" y="15" width="40" height="50" rx="2" fill="#E2E8F0" stroke="#64748B" strokeWidth="1" />
+    <rect x="25" y="25" width="50" height="60" rx="4" fill="white" stroke="#6D3078" strokeWidth="3" />
+    {/* Lines */}
+    <line x1="35" y1="40" x2="65" y2="40" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" />
+    <line x1="35" y1="50" x2="65" y2="50" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" />
+    <line x1="35" y1="60" x2="55" y2="60" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" />
+    {/* Check Seal */}
+    <circle cx="65" cy="75" r="12" fill="#F47E4D" />
+    <path d="M60 75L64 79L70 71" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const LowInterestIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="40" fill="#FEF3C7" opacity="0.5" />
+    {/* Percentage Symbol */}
+    <text x="50" y="65" textAnchor="middle" fontSize="50" fontWeight="bold" fill="#6D3078">%</text>
+    {/* Down Arrow */}
+    <path d="M80 50L70 65L60 50" stroke="#F47E4D" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+    <line x1="70" y1="30" x2="70" y2="65" stroke="#F47E4D" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+);
+
+const FlexibilityIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Abstract Shapes */}
+    <circle cx="30" cy="30" r="10" fill="#6D3078" />
+    <circle cx="70" cy="30" r="10" fill="#F47E4D" />
+    <circle cx="50" cy="70" r="10" fill="#6D3078" />
+    {/* Connections */}
+    <path d="M30 30 Q 50 50 70 30" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="4 4" />
+    <path d="M30 30 Q 20 60 50 70" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="4 4" />
+    <path d="M70 30 Q 80 60 50 70" stroke="#CBD5E1" strokeWidth="3" strokeDasharray="4 4" />
+    {/* Arrows */}
+    <path d="M 50 50 L 80 50 L 75 45 M 80 50 L 75 55" stroke="#F47E4D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const RepaymentIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-24 h-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Calendar/Wallet Hybrid */}
+    <rect x="20" y="30" width="60" height="40" rx="5" fill="white" stroke="#6D3078" strokeWidth="3" />
+    <path d="M20 45H80" stroke="#6D3078" strokeWidth="2" />
+    {/* Coin */}
+    <circle cx="50" cy="50" r="12" fill="#F47E4D" />
+    <text x="50" y="55" textAnchor="middle" fontSize="14" fill="white" fontWeight="bold">₹</text>
+    {/* Hand holding it */}
+    <path d="M10 80 Q 50 90 90 80" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" />
+  </svg>
+);
 
 const businessLinesData = [
   {
     name: "Fast Approvals 🚀",
     href: "#",
+    icon: <FastApprovalIcon />, // Using SVG Component
     data: [
       {
         paragraph: "In-principle sanction within 24-48 hours.",
@@ -19,12 +100,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Fast loan approvals",
-    imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
   },
   {
     name: "Easy Experience",
     href: "#",
+    icon: <EasyExperienceIcon />,
     data: [
       {
         paragraph: "100% digital journey with doorstep support.",
@@ -36,12 +116,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Easy loan experience",
-    imageUrl: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80",
   },
   {
     name: "Minimum Documentation",
     href: "#",
+    icon: <MinDocIcon />,
     data: [
       {
         paragraph: "Simple documents, maximum approval chances.",
@@ -53,12 +132,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Minimum documentation required",
-    imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
   },
   {
     name: "Competitive Interest Rates",
     href: "#",
+    icon: <LowInterestIcon />,
     data: [
       {
         paragraph: "Starting @ just 8.50%* p.a.",
@@ -70,12 +148,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Competitive interest rates",
-    imageUrl: "https://images.unsplash.com/photo-1579621970588-a35d0e7ab9b6?w=800&q=80",
   },
   {
     name: "Flexibility in Loan Products",
     href: "#",
+    icon: <FlexibilityIcon />,
     data: [
       {
         paragraph: "Home Loan, LAP, Plot Loan & Top-up – all in one place.",
@@ -87,12 +164,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Flexible loan products",
-    imageUrl: "https://images.unsplash.com/photo-1516156008625-3a9d6067fabd?w=800&q=80",
   },
   {
     name: "Convenient Repayment Options",
     href: "#",
+    icon: <RepaymentIcon />,
     data: [
       {
         paragraph: "Tenure up to 30 years with flexible EMIs.",
@@ -104,13 +180,11 @@ const businessLinesData = [
         ]
       }
     ],
-    imageAlt: "Convenient repayment options",
-    imageUrl: "https://images.unsplash.com/photo-1559526324-c1f166daf363?w=800&q=80",
   },
 ];
 
 const WhyChooseUs = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -121,9 +195,9 @@ const WhyChooseUs = () => {
 
   return (
     <section ref={ref} className="relative bg-white py-20 overflow-hidden">
-      <motion.div className="absolute inset-0 z-0" style={{ y }}>
-        <div className="h-[120%] w-full bg-cover bg-white bg-center bg-no-repeat" />
-      </motion.div>
+      
+      {/* Background with slight tint instead of image */}
+      <div className="absolute inset-0 z-0 bg-[#F8FAFC]"></div>
 
       <div className="relative z-10 container mx-auto px-5">
         <motion.div
@@ -134,23 +208,11 @@ const WhyChooseUs = () => {
           viewport={{ once: true, amount: 0.3 }}
         >
           <div className="relative inline-block">
-            <motion.span
-              className="absolute bottom-full left-1/2 w-px -translate-x-1/2 bg-gray-300"
-              initial={{ height: 0 }}
-              whileInView={{ height: "40px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            />
-            <h2 className="text-4xl md:text-5xl font-normal text-primary">
+          
+            <h2 className="text-2xl md:text-5xl  text-[#6D3078]">
               Why Choose Maitrii Loans?
             </h2>
-            <motion.span
-              className="absolute top-full left-1/2 mt-3 h-10 w-px -translate-x-1/2 bg-gray-300"
-              initial={{ height: 0 }}
-              whileInView={{ height: "40px" }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            />
+           
           </div>
         </motion.div>
 
@@ -179,40 +241,37 @@ const BusinessCard = ({ item, index }) => {
       }}
       viewport={{ once: true, amount: 0.3 }}
     >
-      <a href={item.href} className="block h-full no-underline">
+      <div className="block h-full no-underline cursor-default">
         <motion.div
-          className="overflow-hidden rounded-xl shadow-lg bg-white h-full flex flex-col"
+          className="overflow-hidden rounded-xl shadow-md bg-white h-full flex flex-col border border-slate-100"
           whileHover={{
             scale: 1.02,
-            boxShadow: "0 20px 30px -10px rgba(0,0,0,0.25)",
+            boxShadow: "0 20px 30px -10px rgba(109, 48, 120, 0.15)", // Purple shadow on hover
+            borderColor: "#F47E4D", // Orange border on hover
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <div className="relative w-full h-48 overflow-hidden flex-shrink-0">
-            <Image
-              src={item.imageUrl}
-              alt={item.imageAlt}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+          {/* Header Area with SVG Icon */}
+          <div className="relative w-full h-40 flex items-center justify-center bg-gradient-to-br from-[#F3E8FF] to-[#FFF7ED]">
+             {/* The SVG Icon */}
+             {item.icon}
           </div>
 
           <div className="p-6 text-left flex flex-col flex-1">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center group-hover:text-primary transition-colors duration-300">
+            <h3 className="text-xl font-bold text-[#6D3078] mb-4 text-center group-hover:text-[#F47E4D] transition-colors duration-300">
               {item.name}
             </h3>
 
             <div className="space-y-3 flex-1">
               {item.data.map((content, idx) => (
                 <div key={idx} className="space-y-3">
-                  <p className="text-sm font-semibold text-gray-700 leading-relaxed">
+                  <p className="text-sm font-semibold text-slate-700 leading-relaxed text-center">
                     {content.paragraph}
                   </p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mt-4">
                     {content.ul.map((listItem, liIdx) => (
-                      <li key={liIdx} className="flex items-start text-xs text-gray-600 leading-relaxed">
-                        <span className="mr-2 text-primary mt-0.5 flex-shrink-0">•</span>
+                      <li key={liIdx} className="flex items-start text-xs text-slate-500 leading-relaxed">
+                        <span className="mr-2 text-[#F47E4D] mt-0.5 flex-shrink-0 font-bold">•</span>
                         <span>{listItem}</span>
                       </li>
                     ))}
@@ -222,7 +281,7 @@ const BusinessCard = ({ item, index }) => {
             </div>
           </div>
         </motion.div>
-      </a>
+      </div>
     </motion.div>
   );
 };
