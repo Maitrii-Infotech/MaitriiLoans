@@ -1,18 +1,32 @@
 import React, { useState } from 'react'
 import styles from './style.module.scss';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { menuSlide } from '../animation';
-import Link from './Link';
+import { menuSlide, slide, scale } from '../animation';
+import Link from 'next/link';
 import Curve from './Curve';
 import Footer from './Footer';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const navItems = [
   {
     title: "Home",
     href: "/",
   },
+
   {
+    title: "Products",
+    href: "#", // Placeholder
+    subItems: [
+        { title: "Home Loan", href: "/product/home-loan" },
+        { title: "Personal Loan", href: "/product/personal-loan" },
+        { title: "Business Loan", href: "/product/business-loan" },
+        { title: "Vehicle Loan", href: "/product/vehicle-loan" },
+        { title: "Mortgage Loan", href: "/product/mortgage" },
+        { title: "MSME", href: "/product/msme" },
+    ]
+  },
+    {
     title: "About",
     href: "/about",
   },
@@ -20,28 +34,13 @@ const navItems = [
     title: "Contact",
     href: "/contact",
   },
-  {
-    title: "Personal Loan",
-    href: "/product/personal-loan",
-  },
-  {
-    title: "Business Loan",
-    href: "/product/business-loan",
-  },
-  {
-    title: "Vehicle Loan",
-    href: "/product/vehicle-loan",
-  },
-  {
-    title: "Mortgage Loan",
-    href: "/product/mortgage",
-  },
 ]
 
 export default function Navigation() {
 
   const pathname = usePathname();
   const [selectedIndicator, setSelectedIndicator] = useState(pathname);
+  const [expandedProduct, setExpandedProduct] = useState(false);
 
   return (
     <motion.div
@@ -58,18 +57,88 @@ export default function Navigation() {
           </div>
           {
             navItems.map((data, index) => {
-              return <Link
+                if (data.subItems) {
+                     return (
+                        <div key={index} className="flex flex-col">
+                            <motion.div 
+                                className={styles.link} 
+                                onMouseEnter={() => {setSelectedIndicator(data.href)}}
+                                onClick={() => setExpandedProduct(!expandedProduct)}
+                                variants={slide} 
+                                custom={index} 
+                                initial="initial" 
+                                animate="enter" 
+                                exit="exit"
+                                style={{cursor: 'pointer'}}
+                            >
+                                <motion.div 
+                                    variants={scale} 
+                                    animate={selectedIndicator == data.href ? "open" : "closed"} 
+                                    className={styles.indicator}>
+                                </motion.div>
+                                <div className="flex items-center gap-2">
+                                    <span>{data.title}</span>
+                                    {expandedProduct ? <ChevronUp size={20}/> : <ChevronDown size={20}/>}
+                                </div>
+                            </motion.div>
+
+                            <AnimatePresence>
+                                {expandedProduct && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="flex flex-col pl-8 gap-3 overflow-hidden"
+                                    >
+                                        {data.subItems.map((sub, i) => (
+                                            <Link key={i} href={sub.href} className="text-xl text-slate-200 hover:text-white transition-colors">
+                                                {sub.title}
+                                            </Link>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                     )
+                }
+
+              return <NavLink
                 key={index}
                 data={{ ...data, index }}
                 isActive={selectedIndicator == data.href}
                 setSelectedIndicator={setSelectedIndicator}>
-              </Link>
+              </NavLink>
             })
           }
         </div>
-
+         <Footer/>
       </div>
       <Curve />
     </motion.div>
   )
+}
+
+function NavLink({data, isActive, setSelectedIndicator}) {
+  
+    const { title, href, index} = data;
+  
+    return (
+      <motion.div 
+        className={styles.link} 
+        onMouseEnter={() => {setSelectedIndicator(href)}} 
+        custom={index} 
+        variants={slide} 
+        initial="initial" 
+        animate="enter" 
+        exit="exit"
+      >
+        <motion.div 
+          variants={scale} 
+          animate={isActive ? "open" : "closed"} 
+          className={styles.indicator}>
+        </motion.div>
+        <Link href={href}>{title}</Link>
+      </motion.div>
+    )
 }
