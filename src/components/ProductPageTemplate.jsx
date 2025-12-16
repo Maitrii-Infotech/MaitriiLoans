@@ -157,12 +157,7 @@ const ProductPageTemplate = ({ hero, info, documents, whyChooseUs }) => {
             {/* ==================== WHY CHOOSE US (Optional) ==================== */}
             {whyChooseUs && (
                 <section className="w-full py-16 bg-[#F8FAFC] text-center">
-                   {/* If whyChooseUs is passed as a component, render it. 
-                       Or if it's data, render the valid structure. 
-                       For now, assuming the user might pass the whole component or data. 
-                       But based on the pattern, the 'WhyChooseUs' component is quite specific.
-                       Let's assume for this refactor, if 'WhyChooseUs' component is passed as prop, use it.
-                   */}
+                  
                    {whyChooseUs}
                 </section>
             )}
