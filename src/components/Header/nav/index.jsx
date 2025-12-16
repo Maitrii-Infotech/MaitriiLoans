@@ -89,12 +89,16 @@ export default function Navigation() {
                                         animate={{ height: "auto", opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}
                                         transition={{ duration: 0.3 }}
-                                        className="flex flex-col pl-8 gap-3 overflow-hidden"
+                                        className="flex flex-col pl-12 overflow-hidden"
                                     >
                                         {data.subItems.map((sub, i) => (
-                                            <Link key={i} href={sub.href} className="text-xl text-slate-200 hover:text-white transition-colors">
-                                                {sub.title}
-                                            </Link>
+                                           <NavLink
+                                                key={i}
+                                                data={{ ...sub, index: i }}
+                                                isActive={selectedIndicator == sub.href}
+                                                setSelectedIndicator={setSelectedIndicator}
+                                                className="text-xl pl-4" // Custom class for smaller font
+                                            />
                                         ))}
                                     </motion.div>
                                 )}
@@ -119,13 +123,13 @@ export default function Navigation() {
   )
 }
 
-function NavLink({data, isActive, setSelectedIndicator}) {
+function NavLink({data, isActive, setSelectedIndicator, className}) {
   
     const { title, href, index} = data;
   
     return (
       <motion.div 
-        className={styles.link} 
+        className={`${styles.link} ${className || ''}`}
         onMouseEnter={() => {setSelectedIndicator(href)}} 
         custom={index} 
         variants={slide} 
