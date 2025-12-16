@@ -1,153 +1,144 @@
 .description {
-    padding-left: 100px;
-    padding-right: 100px;
-    margin-top: 150px; // Thoda margin bhi kam kiya
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+
+  .body {
+    max-width: 1200px;
+    width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    position: relative;
+
+    // --- BUTTON CONTAINER ---
+    .buttonContainer {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+
+      .roundedButton {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #6d3078 !important;
+        border: 1px solid #6d3078 !important;
+        transition: all 0.4s ease;
+
+        &:hover {
+          background-color: #ffffff !important;
+          border: 1px solid #000000 !important;
+
+          div {
+            background-color: #ffffff !important;
+          }
+        }
+
+        img {
+          width: 70px;
+          height: auto;
+          object-fit: contain;
+          position: relative;
+          z-index: 10;
+          pointer-events: none;
+        }
+      }
+    }
+
+    // --- TEXT CONTAINER ---
+    .textContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+
+      p {
+        margin: 0px;
+
+        // --- MAIN JUSTIFIED TEXT ---
+        &.justifiedText {
+          font-size: 24px;
+          line-height: 1.4;
+          font-weight: 500;
+
+          text-align: justify;
+          text-justify: inter-word;
+
+          .mask {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+          }
+        }
+
+        // --- Secondary Description Text ---
+        &:nth-of-type(2) {
+          font-size: 15px;
+          width: 90%;
+          font-weight: 400;
+          line-height: 1.6;
+          color: #4b5563;
+          text-align: justify;
+        }
+      }
+    }
+  }
+
+  // --- RESPONSIVE ---
+  @media (max-width: 1024px) {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 100px;
 
     .body {
-        max-width: 1200px; // Width thodi kam ki taaki content compact rahe
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
-        gap: 60px;
-        position: relative;
+      flex-direction: column;
+      gap: 30px;
 
-        // --- BUTTON CONTAINER ---
-        .buttonContainer {
-            position: relative;
-            width: 140px; // Button size thoda chhota kiya (180px -> 140px)
-            height: 140px;
-            flex-shrink: 0;
+      .buttonContainer {
+        margin-bottom: 10px;
+        width: 100px;
+        height: 100px;
 
-            // --- BUTTON STYLING ---
-            .roundedButton {
-                width: 100% !important;
-                height: 100% !important;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                // DEFAULT STATE: Purple Background, Purple Border
-                background-color: #6D3078 !important;
-                border: 1px solid #6D3078 !important;
-
-                transition: all 0.4s ease;
-
-                // HOVER STATE: White Background, BLACK Border
-                &:hover {
-                    background-color: #FFFFFF !important;
-                    border: 1px solid #000000 !important;
-
-                    div {
-                        background-color: #FFFFFF !important;
-                    }
-                }
-
-                // IMAGE LOGO
-                img {
-                    width: 70px; // Image size adjust kiya
-                    height: auto;
-                    object-fit: contain;
-
-                    position: relative;
-                    z-index: 10;
-                    pointer-events: none;
-                }
-            }
+        .roundedButton img {
+          width: 50px;
         }
+      }
 
-        // --- TEXT CONTAINER ---
-        .textContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 25px; // Gap kam kiya (40px -> 25px)
-
-            p {
-                margin: 0px;
-
-                // Main Animated Text
-                &:nth-of-type(1) {
-                    font-size: 24px; // Reduced from 36px
-                    line-height: 1.4;
-                    font-weight: 500;
-
-                    span {
-                        margin-right: 4px;
-                    }
-
-                    .mask {
-                        position: relative;
-                        overflow: hidden;
-                        display: inline-flex;
-                    }
-                }
-
-                // Secondary Description Text
-                &:nth-of-type(2) {
-                    font-size: 15px; // Reduced from 18px
-                    width: 90%; // Width badhai taaki text faile nahi
-                    font-weight: 400;
-                    line-height: 1.6;
-                    color: #4b5563; // Thoda soft color text ke liye
-                }
-            }
+      .textContainer {
+        p.justifiedText {
+          font-size: 20px;
         }
+        p:nth-of-type(2) {
+          width: 100%;
+          font-size: 14px;
+        }
+      }
     }
+  }
 
-    // --- RESPONSIVE (Tablets & Small Laptops) ---
-    @media (max-width: 1024px) {
-        padding-left: 40px;
-        padding-right: 40px;
-        margin-top: 100px;
+  @media (max-width: 768px) {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 80px;
 
-        .body {
-            flex-direction: column; // Stack button and text
-            gap: 30px;
+    .body {
+      .textContainer {
+        gap: 15px;
 
-            .buttonContainer {
-                margin-bottom: 10px;
-                width: 100px; // Aur chhota kiya tablets ke liye
-                height: 100px;
-
-                .roundedButton img {
-                    width: 50px;
-                }
-            }
-
-            .textContainer {
-                p:nth-of-type(1) {
-                    font-size: 20px;
-                }
-
-                p:nth-of-type(2) {
-                    width: 100%;
-                    font-size: 14px;
-                }
-            }
+        p.justifiedText {
+          font-size: 18px;
+          line-height: 1.4;
         }
-    }
 
-    // --- RESPONSIVE (Mobile) ---
-    @media (max-width: 768px) {
-        padding-left: 20px;
-        padding-right: 20px;
-        margin-top: 80px;
-
-        .body {
-            .textContainer {
-                gap: 15px;
-
-                p:nth-of-type(1) {
-                    font-size: 18px; // Mobile pe text size perfect padhne ke liye
-                    line-height: 1.4;
-                }
-
-                p:nth-of-type(2) {
-                    font-size: 13px;
-                }
-            }
+        p:nth-of-type(2) {
+          font-size: 13px;
         }
+      }
     }
+  }
 }

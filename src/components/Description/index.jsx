@@ -18,7 +18,6 @@ export default function Description() {
 
                 {/* Button Container Left */}
                 <div className={styles.buttonContainer}>
-                    {/* backgroundColor="#FFFFFF" pass kiya taaki animation white ho */}
                     <Rounded backgroundColor={"#FFFFFF"} className={styles.roundedButton}>
                         <Image src={Maitrilogo} alt="Maitrii Loans Logo" width={50} height={50} />
                     </Rounded>
@@ -26,10 +25,25 @@ export default function Description() {
 
                 {/* Text Container Right */}
                 <div className={styles.textContainer}>
-                    <p>
+                    <p className={styles.justifiedText}>
                         {
                             phrase.split(" ").map((word, index) => {
-                                return <span key={index} className={styles.mask}><motion.span variants={slideUp} custom={index} animate={isInView ? "open" : "closed"} key={index}>{word}</motion.span></span>
+                                return (
+                                    <span key={index} style={{ display: "inline" }}>
+                                        <span className={styles.mask}>
+                                            <motion.span 
+                                                variants={slideUp} 
+                                                custom={index} 
+                                                animate={isInView ? "open" : "closed"} 
+                                                key={index}
+                                            >
+                                                {word}
+                                            </motion.span>
+                                        </span>
+                                        {/* Use a normal space character ' ' to allow browser justification */}
+                                        {" "}
+                                    </span>
+                                )
                             })
                         }
                     </p>
