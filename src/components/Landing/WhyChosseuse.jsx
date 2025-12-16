@@ -144,7 +144,7 @@ const businessLinesData = [
           "Lowest rates based on profile",
           "Special rates for women applicants",
           "Balance transfer with rate reduction",
-          "Zero foreclosure after 36 months"
+          "Foreclosure waiver in case of Top-Up"
         ]
       }
     ],
