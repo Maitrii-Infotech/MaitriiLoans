@@ -117,7 +117,7 @@ Grievances Redressal
               <div className="flex items-start text-[0.9rem] text-gray-500">
                 <MapPin className="w-[18px] h-[18px] text-[#6D3078] mr-3 mt-[3px] shrink-0" />
                 <span className="leading-relaxed">
-                  CO/- 11/70 Madhyam Marg, Mansarovar, Jaipur - 302020
+                11/70 Madhyam Marg, Mansarovar, Jaipur - 302020
                 </span>
               </div>
 
