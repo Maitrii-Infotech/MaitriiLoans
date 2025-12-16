@@ -155,12 +155,12 @@ const businessLinesData = [
     icon: <FlexibilityIcon />,
     data: [
       {
-        paragraph: "Home Loan, LAP, Plot Loan & Top-up – all in one place.",
+        paragraph: "All type of loan products in one place",
         ul: [
           "Loan against residential & commercial property",
           "Plot purchase + construction loans",
           "Top-up on existing loans",
-          "Overdraft facility available"
+          "Other business and personal loan available"
         ]
       }
     ],
