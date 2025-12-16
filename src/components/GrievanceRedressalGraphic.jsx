@@ -39,7 +39,7 @@ const GrievanceRedressalGraphic = () => {
                 <g filter="url(#softShadow)">
                     <rect x="200" y="20" width="400" height="70" rx="35" fill="url(#purpleGrad)" />
                     <text x="400" y="50" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold" fontFamily="sans-serif">Complaint Registration</text>
-                    <text x="400" y="70" textAnchor="middle" fill="white" fontSize="12" fontFamily="sans-serif" opacity="0.9">Branch • Call Center • Email</text>
+                    <text x="400" y="70" textAnchor="middle" fill="white" fontSize="12" fontFamily="sans-serif" opacity="0.9">Branch • Head Office • Email</text>
                 </g>
 
                 <g transform="translate(100, 140)" filter="url(#softShadow)">

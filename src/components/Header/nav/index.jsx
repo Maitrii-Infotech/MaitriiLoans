@@ -35,7 +35,8 @@ const navItems = [
     href: "/contact",
   },
 ]
-
+///// fotter comment out hai we can  use it later
+// hide the text for now beacuse it doesnt look good 
 export default function Navigation() {
 
   const pathname = usePathname();
@@ -52,9 +53,9 @@ export default function Navigation() {
     >
       <div className={styles.body}>
         <div onMouseLeave={() => { setSelectedIndicator(pathname) }} className={styles.nav}>
-          <div className={styles.header}>
+          {/* <div className={styles.header}>
             <p>Maitrii Loans</p>
-          </div>
+          </div> */}
           {
             navItems.map((data, index) => {
                 if (data.subItems) {
@@ -97,7 +98,7 @@ export default function Navigation() {
                                                 data={{ ...sub, index: i }}
                                                 isActive={selectedIndicator == sub.href}
                                                 setSelectedIndicator={setSelectedIndicator}
-                                                className="text-xl pl-4" // Custom class for smaller font
+                                                className="text-xl" // Custom class for smaller font
                                             />
                                         ))}
                                     </motion.div>
@@ -116,7 +117,7 @@ export default function Navigation() {
             })
           }
         </div>
-         <Footer/>
+         {/* <Footer/> */}
       </div>
       <Curve />
     </motion.div>
