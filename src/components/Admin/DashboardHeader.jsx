@@ -7,6 +7,23 @@ import axios from 'axios';
 const DashboardHeader = ({ title = "Overview", toggleSidebar }) => {
     const [notifications, setNotifications] = useState([]);
     const [userId, setUserId] = useState(null);
+
+    // Fetch User ID on mount
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { data } = await axios.get('/api/auth/me');
+                if (data.user?._id) {
+                    setUserId(data.user._id);
+                }
+            } catch (e) {
+                console.error("User fetch error", e);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    // Fetch Notifications when userId is available
     useEffect(() => {
         if (!userId) return;
 
