@@ -25,7 +25,7 @@ async function verifySuperadmin() {
   }
 }
 
-// GET - Fetch current policy settings (for admin view)
+// GET - Fetch ALL policies (History)
 export async function GET() {
   try {
     await connectToDatabase();
@@ -34,27 +34,23 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const policy = await PolicyUpdate.findOne().sort({ updatedAt: -1 });
+    // Return list sorted by newest first
+    const policies = await PolicyUpdate.find().sort({ createdAt: -1 });
     
-    if (policy) {
-      // Check if expired for admin display
-      const isExpired = policy.expiryDate && new Date() > new Date(policy.expiryDate);
-      return NextResponse.json({ 
-        policy: {
-          ...policy.toObject(),
-          isExpired
-        }
-      }, { status: 200 });
-    }
+    // Check expiry for each
+    const policiesWithStatus = policies.map(p => ({
+        ...p.toObject(),
+        isExpired: p.expiryDate && new Date() > new Date(p.expiryDate)
+    }));
     
-    return NextResponse.json({ policy: null }, { status: 200 });
+    return NextResponse.json({ policies: policiesWithStatus }, { status: 200 });
   } catch (error) {
     console.error("Admin Policy Fetch Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
-// POST - Create or Update policy
+// POST - Create NEW policy
 export async function POST(req) {
   try {
     await connectToDatabase();
@@ -77,8 +73,8 @@ export async function POST(req) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
 
-    // Build update object
-    const updateData = {
+    // Build create object
+    const newPolicyData = {
       title: title || 'Policy Update',
       type,
       isEnabled: isEnabled ?? false,
@@ -86,31 +82,23 @@ export async function POST(req) {
     };
 
     if (type === 'pdf') {
-      updateData.pdfData = pdfData;
-      updateData.pdfName = pdfName || 'policy.pdf';
-      updateData.url = null; // Clear URL if switching to PDF
+      newPolicyData.pdfData = pdfData;
+      newPolicyData.pdfName = pdfName || 'policy.pdf';
     } else {
-      updateData.url = url;
-      updateData.pdfData = null; // Clear PDF data if switching to link
-      updateData.pdfName = null;
+      newPolicyData.url = url;
     }
 
-    // Upsert - only one policy record
-    const policy = await PolicyUpdate.findOneAndUpdate(
-      {},
-      updateData,
-      { upsert: true, new: true }
-    );
+    const policy = await PolicyUpdate.create(newPolicyData);
 
-    return NextResponse.json({ policy, message: "Policy updated successfully" }, { status: 200 });
+    return NextResponse.json({ policy, message: "Policy created successfully" }, { status: 201 });
   } catch (error) {
-    console.error("Admin Policy Update Error:", error);
+    console.error("Admin Policy Create Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
-// DELETE - Delete policy
-export async function DELETE() {
+// PUT - Update specific policy (Toggle enable/disable, etc)
+export async function PUT(req) {
   try {
     await connectToDatabase();
     const user = await verifySuperadmin();
@@ -118,7 +106,53 @@ export async function DELETE() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await PolicyUpdate.deleteMany({});
+    const { id, isEnabled, title, expiryDate } = await req.json();
+    
+    if (!id) {
+        return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    // Construct update payload (only update provided fields)
+    const updateData = {};
+    if (isEnabled !== undefined) updateData.isEnabled = isEnabled;
+    if (title !== undefined) updateData.title = title;
+    if (expiryDate !== undefined) updateData.expiryDate = expiryDate;
+
+    const policy = await PolicyUpdate.findByIdAndUpdate(
+        id, 
+        updateData, 
+        { new: true }
+    );
+
+    if (!policy) {
+        return NextResponse.json({ error: "Policy not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ policy, message: "Policy updated successfully" }, { status: 200 });
+  } catch (error) {
+      console.error("Admin Policy Update Error:", error);
+      return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+// DELETE - Delete specific policy
+export async function DELETE(req) {
+  try {
+    await connectToDatabase();
+    const user = await verifySuperadmin();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: "Policy ID is required" }, { status: 400 });
+    }
+
+    await PolicyUpdate.findByIdAndDelete(id);
+    
     return NextResponse.json({ message: "Policy deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("Admin Policy Delete Error:", error);

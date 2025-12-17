@@ -10,7 +10,7 @@ async function getAuthUser() {
     // This part assumes client sends some ID or we interpret session.
     // For now, we will rely on a custom header from the client or basic session check if possible.
     // Simplification: We will accept a 'x-user-id' header for this polling (secure this in real prod).
-    const headersList = headers();
+    const headersList = await headers();
     const userId = headersList.get('x-user-id');
     if (!userId) return null;
     return await User.findById(userId);

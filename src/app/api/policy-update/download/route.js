@@ -2,18 +2,29 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import PolicyUpdate from "@/models/PolicyUpdate";
 
-export async function GET() {
+export async function GET(req) {
   try {
     await connectToDatabase();
     
-    const policy = await PolicyUpdate.findOne({ isEnabled: true }).sort({ updatedAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    let policy;
+
+    if (id) {
+        // Fetch specific policy (Admin preview)
+        policy = await PolicyUpdate.findById(id);
+    } else {
+        // Default: Fetch latest ENABLED policy (Public view)
+        policy = await PolicyUpdate.findOne({ isEnabled: true }).sort({ updatedAt: -1 });
+    }
     
     if (!policy || !policy.pdfData) {
       return NextResponse.json({ error: "PDF not found" }, { status: 404 });
     }
 
-    // Check if expired
-    if (policy.expiryDate && new Date() > new Date(policy.expiryDate)) {
+    // Check expiry ONLY for public view (no ID param)
+    if (!id && policy.expiryDate && new Date() > new Date(policy.expiryDate)) {
       return NextResponse.json({ error: "Policy expired" }, { status: 410 });
     }
 
@@ -25,7 +36,7 @@ export async function GET() {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${policy.pdfName || 'policy.pdf'}"`,
+        'Content-Disposition': `inline; filename="${policy.pdfName || 'policy.pdf'}"`, // Changed to inline for browser preview
         'Content-Length': pdfBuffer.length.toString(),
         'Cache-Control': 'public, s-maxage=43200'
       }
