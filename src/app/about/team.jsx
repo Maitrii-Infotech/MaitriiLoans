@@ -19,7 +19,7 @@ const teamMembers = [
         name: "Mr. Vijendra Sharma",
         role: "Regional Head",
         description: "Expert in regional market dynamics and customer relationship management. Successfully expanded the branch network across multiple districts.",
-        image: teamMemberImage,
+        image: vijendra,
     },
     {
         name: "Ms. Jyoti",
