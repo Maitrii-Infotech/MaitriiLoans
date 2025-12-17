@@ -2,7 +2,7 @@ import { NextRequest, NextResponse  } from "next/server";
 
 
 class InMemoryRateLimiter{
-    private store = new Map();
+    store = new Map();
     
 
     async get(key){
