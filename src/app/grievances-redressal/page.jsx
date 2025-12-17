@@ -5,20 +5,13 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, AlertTriangle } from 'lucide-react';
 import GrievanceRedressalGraphic from '@/components/GrievanceRedressalGraphic';
 
+import GrievanceHero from './GrievanceHero';
+
 const GrievancesRedressal = () => {
     return (
-        <main className="w-full min-h-screen bg-slate-50 pt-32 pb-20">
+        <main className="w-full min-h-screen bg-slate-50 pb-20">
+            <GrievanceHero />
             <div className="container mx-auto px-6 md:px-12">
-                
-                {/* Header */}
-                <div className="text-center mb-16">
-                    <h1 className="text-3xl md:text-5xl font-bold text-[#6D3078] mb-4">
-                        Grievance Redressal Policy
-                    </h1>
-                    <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        We are committed to providing the best service. If you have any concerns or complaints, please follow our redressal mechanism.
-                    </p>
-                </div>
 
                 {/* Visual Graphic Section */}
                 <div className="mb-20 bg-white p-6 md:p-12 rounded-3xl shadow-xl shadow-purple-900/5">
@@ -29,9 +22,9 @@ const GrievancesRedressal = () => {
                 </div>
 
                 {/* Detailed Contact Information (Grid) */}
+{/* 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
                     
-                    {/* Level 1 Card */}
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -61,7 +54,7 @@ const GrievancesRedressal = () => {
                         </div>
                     </motion.div>
 
-                    {/* Level 2 Card */}
+                    
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +86,7 @@ const GrievancesRedressal = () => {
 
                 </div>
 
-                {/* Level 3: RBI Appeal */}
+                
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -123,13 +116,14 @@ const GrievancesRedressal = () => {
                     </div>
                 </motion.div>
 
-                {/* Additional Policy Info */}
+                
                  <div className="prose prose-slate max-w-4xl mx-auto text-slate-600">
                     <h3 className="text-[#6D3078]">Complaints against Outsourced Vendors</h3>
                     <p>
                         Any complaint forwarded to the Company from an outsourced vendor or lodged by the customer regarding an outsourced vendor shall be handled in accordance with the terms of this policy document.
                     </p>
-                </div>
+                </div> 
+                */}
 
             </div>
         </main>
