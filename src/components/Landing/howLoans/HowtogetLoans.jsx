@@ -43,22 +43,22 @@ export function Howtogetloans() {
 export const projects = [
   {
     title: "Apply for Loan",
-    description: "Fill the details below or Call/visit your nearest branch. Our Loan manager will look after your needs",
+    description: "Start by filling out the form below or visiting your nearest branch. Our expert loan managers are ready to guide you.",
     link: "#",
   },
   {
     title: "KYC & Due Diligence",
-    description: "Once you select the type of loan, a list of documents shall be required for compliance, review, and evaluation.",
-    link: "#",
-  },
-  {
-    title: "Get Funding Fast",
-    description: "With our fast loan processing structure, receive your payment the same day your loan is sanctioned.",
+    description: "Complete the necessary documentation for compliance and review. We make the verification process simple and transparent.",
     link: "#",
   },
   {
     title: "Application Review",
-    description: "Your loan will be processed seamlessly, With minimal formalities and hassle-free ease come true.",
+    description: "Your application undergoes a seamless review process with minimal formalities, ensuring a quick and hassle-free approval.",
     link: "#",
   },
+   {
+    title: "Get Funding Fast",
+    description: "Experience rapid funding with our streamlined process. Get the loan amount credited to your account the same day it's approved.",
+    link: "#",
+  }
 ];
