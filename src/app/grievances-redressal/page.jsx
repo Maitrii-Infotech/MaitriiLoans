@@ -11,10 +11,10 @@ const GrievancesRedressal = () => {
     return (
         <main className="w-full min-h-screen bg-slate-50 pb-20">
             <GrievanceHero />
-            <div className="container mx-auto px-6 md:px-12">
+            <div className="">
 
                 {/* Visual Graphic Section */}
-                <div className="mb-20 bg-white p-6 md:p-12 rounded-3xl shadow-xl shadow-purple-900/5">
+                <div className="mb-20 bg-white p-6 md:p-12  shadow-xl shadow-purple-900/5">
                     <h2 className="text-2xl font-bold text-[#F47E4D] mb-8 text-center uppercase tracking-widest">
                         Redressal Mechanism Flow
                     </h2>
