@@ -31,7 +31,7 @@ const teamMembers = [
         name: "Team Member 4",
         role: "Credit Analyst",
         description: "Specializes in risk assessment and credit evaluation. Plays a vital role in maintaining the health of our loan portfolio through rigorous analysis.",
-        image: "",
+        image: msJyoti,
     },
 ];
 
