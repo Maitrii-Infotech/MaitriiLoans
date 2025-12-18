@@ -26,9 +26,14 @@ const navItems = [
     ]
   },
     {
+    title: "Charges",
+    href: "/charges",
+  },
+    {
     title: "About",
     href: "/about",
   },
+
   {
     title: "Contact",
     href: "/contact",
