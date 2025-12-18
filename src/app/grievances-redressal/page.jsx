@@ -202,8 +202,8 @@ const GrievancesRedressal = () => {
                       </span>
                     </div>
                     <div className="text-xs text-slate-500 flex gap-4">
-                      <span>+91 77910-77777</span>
-                      <span>customercare@skfin.in</span>
+                     <span> Maitrii Loans-11/70 Madhyam Marg, Mansarovar,
+Jaipur - 302020</span>
                     </div>
                   </div>
                 </div>
@@ -235,9 +235,9 @@ const GrievancesRedressal = () => {
                       </span>
                     </div>
                     <div className="text-xs text-slate-500 flex gap-4">
-                      <span>11/70 Madhyam Marg, Mansarovar,
+                      <span> Maitrii Loans-11/70 Madhyam Marg, Mansarovar,
 Jaipur - 302020</span>
-                      <span>+91 77920-77777</span>
+                   
                     
                     </div>
                   </div>
@@ -259,16 +259,9 @@ Jaipur - 302020</span>
                     <div className="flex justify-between items-start mb-3">
                       <div>
                         <h3 className="font-bold text-sm text-[#F47E4D]">
-                         
+                          Appeal to RBI
                         </h3>
-                        <p className="text-xs text-slate-700 font-bold mt-1">
-                    
-                        </p>
-                        <p className="text-[10px] text-slate-500 leading-tight">
-                      
-                          <br />
-                  
-                        </p>
+                       
                       </div>
                       <span className="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded border border-slate-200">
                   Level 3
@@ -312,13 +305,12 @@ Jaipur - 302020</span>
                         <div className="w-3.5 h-3.5 flex items-center justify-center">
                           <div className="w-1.5 h-1.5 bg-[#F47E4D] rounded-full"></div>
                         </div>
-                        <a
-                          href="/"
-                          target="_blank"
+                        <p
+                        
                           className="text-[#F47E4D] text-[10px] font-bold hover:underline flex items-center gap-1"
                         >
                           Lodge Complaint on CMS Portal ↗
-                        </a>
+                        </p>
                       </div>
                     </div>
                   </div>
