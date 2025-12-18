@@ -80,7 +80,7 @@ export default function YourNextFinanclegoal() {
                     
                     <CounterItem 
                         end={1500}
-                        label="Customers Empowered" 
+                        label="98% Customer Satisfaction Rate" 
                         icon={Users} 
                         color="from-orange-500 to-red-500"
                     />
