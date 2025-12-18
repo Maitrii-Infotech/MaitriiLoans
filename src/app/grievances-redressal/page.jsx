@@ -235,8 +235,10 @@ const GrievancesRedressal = () => {
                       </span>
                     </div>
                     <div className="text-xs text-slate-500 flex gap-4">
+                      <span>11/70 Madhyam Marg, Mansarovar,
+Jaipur - 302020</span>
                       <span>+91 77920-77777</span>
-                      <span>pno@skfin.in</span>
+                    
                     </div>
                   </div>
                 </div>
