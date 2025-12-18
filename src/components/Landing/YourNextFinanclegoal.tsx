@@ -67,7 +67,8 @@ export default function YourNextFinanclegoal() {
                     transition={{ duration: 0.6 }}
                 >
                      <h1  className="text-2xl md:text-5xl text-center text-white mb-10 max-w-4xl mx-auto leading-tight drop-shadow-lg uppercase tracking-wider">
-                        Your Next Financial Goal
+                      Growing Stronger: Our Progress So Far
+
                     </h1>
                     <p className="text-center text-white  mb-20 max-w-3xl mx-auto leading-relaxed ">
                         Single destination for multiple financial needs. We empower your dreams with fast and secure funding.

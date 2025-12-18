@@ -1,5 +1,6 @@
 import connectToDatabase from "@/lib/db";
 import Grievance from "@/models/Grievance";
+import Notification from "@/models/Notification";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -15,8 +16,6 @@ export async function POST(req) {
 
     await connectToDatabase();
 
-    // 1. Check for existing active grievance (Pending or In Progress or Resolved)
-    // Assuming 'Closed' means they can file a new one, strictly one active complaint.
     const existingGrievance = await Grievance.findOne({
       $or: [{ email }, { mobile }],
       status: { $nin: ["Closed"] },
@@ -27,17 +26,14 @@ export async function POST(req) {
         {
           message: `A complaint is already active for this Email or Mobile number. Complaint ID: ${existingGrievance.complaintId}`,
         },
-        { status: 429 } // Rate limit / Conflict
+        { status: 429 }
       );
     }
 
-    // 2. Generate Complaint ID
-    // Find the latest grievance to increment ID
     const latestGrievance = await Grievance.findOne().sort({ createdAt: -1 });
     
-    let nextIdNumber = 10001; // Default start
+    let nextIdNumber = 10001;
     if (latestGrievance && latestGrievance.complaintId) {
-        // Extract number from MaitriiXXXXX
         const currentNumber = parseInt(latestGrievance.complaintId.replace("Maitrii", ""), 10);
         if (!isNaN(currentNumber)) {
             nextIdNumber = currentNumber + 1;
@@ -46,7 +42,6 @@ export async function POST(req) {
     
     const newComplaintId = `Maitrii${nextIdNumber}`;
 
-    // 3. Create new Grievance
     const grievance = await Grievance.create({
       name,
       mobile,
@@ -56,6 +51,17 @@ export async function POST(req) {
       complaintId: newComplaintId,
       status: "Pending"
     });
+
+    try {
+      await Notification.create({
+        message: `New Grievance Received: ${newComplaintId} from ${name}`,
+        type: 'grievance',
+        targetPermissions: ['admin', 'superadmin'],
+        link: '/admin/dashboard?tab=grievance'
+      });
+    } catch (notifError) {
+      console.error("Failed to create notification", notifError);
+    }
 
     return NextResponse.json(
       {
