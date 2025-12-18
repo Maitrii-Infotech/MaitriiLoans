@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { opacity, slideUp } from './anim';
-import logo from "../../../public/images/logo.png"
+import logo from "../../../public/icons/whitelogo.png"
 const words = ["Home Loans", "Fast Approvals", "Home & Personal Loans", "Business Loans", "Apply in Minutes", "Trusted Loan Partner",]
 
 export default function Preloader() {
