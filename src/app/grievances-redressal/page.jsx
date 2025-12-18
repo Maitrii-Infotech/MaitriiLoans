@@ -35,7 +35,13 @@ const GrievancesRedressal = () => {
   const closeNotification = () => setNotification({ message: "", type: "" });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'mobile') {
+        const numericValue = value.replace(/\D/g, '').slice(0, 10);
+        setFormData({ ...formData, [name]: numericValue });
+    } else {
+        setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -43,6 +49,15 @@ const GrievancesRedressal = () => {
     setLoading(true);
     setSubmittedId(null);
     closeNotification();
+
+    if (formData.mobile.length !== 10) {
+        setNotification({
+          message: "Please enter a valid 10-digit mobile number.",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+    }
 
     try {
       const response = await fetch("/api/grievance", {

@@ -28,7 +28,14 @@ const ContactUs = () => {
     const [cities, setCities] = useState([]);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        if (name === 'phone') {
+            // Allow only digits and max 10 chars
+            const numericValue = value.replace(/\D/g, '').slice(0, 10);
+            setFormData({ ...formData, [name]: numericValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleStateChange = (e) => {
@@ -40,6 +47,12 @@ const ContactUs = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        if (formData.phone.length !== 10) {
+            alert("Please enter a valid 10-digit mobile number.");
+            return;
+        }
+
         setSubmitting(true);
         try {
             await axios.post('/api/contact', formData);
