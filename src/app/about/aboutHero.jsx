@@ -10,7 +10,7 @@ const MaitriiAbout = () => {
 
                 {/* --- Left Side: Text Content --- */}
                 <motion.div
-                    className="flex flex-col gap-4 max-w-lg"
+                    className="flex flex-col gap-4 max-w-2xl"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -19,12 +19,12 @@ const MaitriiAbout = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-[#F47E4D]">
                         About Maitrii
                     </h2>
-                    <p className="text-lg text-[#6D3078] leading-relaxed font-medium">
+                    <p className="text-lg text-[#6D3078] leading-relaxed text-justify font-medium">
                   In Sanskrit, "MAITRII" evokes friendship, goodwill, and kindness—timeless values that extend to prosperity and unwavering support. For MAITRII Loans, it symbolizes more than emotional bonds: it's the financial empowerment that unlocks opportunities, strengthens relationships, and drives real progress.
                     </p>
 
 
-                    <p className="text-lg text-[#6D3078] leading-relaxed font-medium">
+                    <p className="text-lg text-[#6D3078] leading-relaxed   text-justify font-medium">
                    As your trusted NBFC partner, we uplift customers with quick, reliable loans that blend practical funding with personal support—helping you build a brighter, more prosperous future.
 
                     </p>
