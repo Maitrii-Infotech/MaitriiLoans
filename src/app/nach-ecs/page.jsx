@@ -70,7 +70,7 @@ const NachEcsPage = () => {
             {
                 question: "Can I cancel or modify my NACH/ECS mandate?",
                 answer: "You can cancel or modify your mandate for closed loans or inactive accounts. However, mandates for active loans typically cannot be cancelled until the loan is fully repaid."
-                link:"/grievances-redressal"
+                link:"/grievances-redressal",
                 linkinfo:"if you face any issues with your NACH/ECS transactions, go to this link >"
             },
             {

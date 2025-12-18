@@ -144,6 +144,19 @@ const ProductPageTemplate = ({ hero, info, documents, whyChooseUs, showApplyButt
                                                 >
                                                     <div className="pb-6 text-slate-600 leading-relaxed">
                                                         {item.answer}
+                                                        {item.link && (
+                                                            <div className="mt-3">
+                                                                <span className="text-sm font-medium text-slate-500 mr-2">
+                                                                    {item.linkinfo}
+                                                                </span>
+                                                                <a 
+                                                                    href={item.link} 
+                                                                    className="text-sm font-bold text-[#F47E4D] hover:underline hover:text-[#d66a3d] transition-colors"
+                                                                >
+                                                                    Click Here
+                                                                </a>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </motion.div>
                                             )}
