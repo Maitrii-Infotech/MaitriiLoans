@@ -27,7 +27,7 @@ const navItems = [
   },
     {
     title: "Charges",
-    href: "/charges",
+    href: "/",
   },
     {
     title: "About",
