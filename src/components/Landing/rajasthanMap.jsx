@@ -40,7 +40,7 @@ const stateConfig = {
     name: "Madhya Pradesh",
     projectionConfig: {
       scale: 5000,
-      center: [77.5, 23.5]
+      center: [77.5, 25.5]
     },
     markers: [
       { name: "Indore", coordinates: [75.8577, 22.7196], status: "current" },
